@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +26,16 @@ public class StudentControllerServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// list the student   ... in MVC fashion
-		listStudents(request, response);
+		try {
+			// list the student   ... in MVC fashion
+			listStudents(request, response);
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 
-	private listStudents(HttpServeltrequest request, HttpServeltResponse response) {
+	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
 		// get students form db util
 		List<Student> students = studentDbUtil.getStudents();
 
@@ -37,6 +43,8 @@ public class StudentControllerServlet extends HttpServlet {
 		request.setAttribute("STUDENT_LIST", students);
 
 		// send to JSP page
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	@Override
