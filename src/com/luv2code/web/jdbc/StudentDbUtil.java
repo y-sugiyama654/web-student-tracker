@@ -79,4 +79,9 @@ public class StudentDbUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static void addStudent(Student theStudent) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }
