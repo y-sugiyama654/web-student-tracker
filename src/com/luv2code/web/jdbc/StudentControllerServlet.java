@@ -66,7 +66,7 @@ public class StudentControllerServlet extends HttpServlet {
 		Student theStudent = new Student(firstName, lastName, email);
 
 		// add the student to the database
-		StudentDbUtil.addStudent(theStudent);
+		studentDbUtil.addStudent(theStudent);
 
 		// send back to main page (the student list)
 		listStudents(request, response);
