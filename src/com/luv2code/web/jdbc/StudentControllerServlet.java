@@ -52,12 +52,35 @@ public class StudentControllerServlet extends HttpServlet {
 					loadStudent(request, response);
 					break;
 
+				case "UPDATE":
+					updateStudent(request, response);
+					break;
+
 				default:
 					listStudents(request, response);
 			}
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
+	}
+
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// read student info from form data
+		int id = Integer.parseInt(request.getParameter("studentId"));
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+
+		// create new student object
+		Student theStudent = new Student(id, firstName, lastName, email);
+
+		// perform update on database
+		studentDbUtil.updateStudent(theStudent);
+
+		// send them back to the "list student" page
+		listStudents(request, response);
+
 	}
 
 	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
