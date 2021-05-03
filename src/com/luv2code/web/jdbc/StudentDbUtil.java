@@ -169,7 +169,7 @@ public class StudentDbUtil {
 			// get db connection
 			myConn = dataSource.getConnection();
 
-			// create SQL update statement
+			// create SQL to update statement
 			String sql = "UPDATE student "
 						+ "SET first_name=?, last_name=?, email=? "
 						+ "WHERE id = ?";
@@ -190,5 +190,34 @@ public class StudentDbUtil {
 			close(myConn, myStmt, null);
 		}
 
+	}
+
+	public void deleteStudent(String theStudentId) throws Exception {
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// convert student id to int
+			int studentId = Integer.parseInt(theStudentId);
+
+			// get db connection
+			myConn = dataSource.getConnection();
+
+			// create SQL to delete statement
+			String sql = "DELETE from student WHERE id = ?";
+
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, studentId);
+
+			// execute SQL statement
+			myStmt.execute();
+		} finally {
+			// clean up JDBC object
+			close(myConn, myStmt, null);
+		}
 	}
 }
